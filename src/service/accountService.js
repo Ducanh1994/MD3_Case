@@ -4,5 +4,7 @@ class AccountService {
     connect;
     constructor() {
         connection.connectToMySQL();
+        this.connect =
+
     }
 }
