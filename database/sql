@@ -1,0 +1,40 @@
+create database stores;
+use stores;
+create table category (
+    id int not null auto_increment primary key,
+    nameCategory varchar(100)
+);
+
+create table account (
+    id int not null auto_increment primary key,
+    userName varchar(255) not null,
+    passWord varchar(20),
+    role varchar(10)
+);
+
+create table product (
+    id int not null auto_increment primary key,
+    nameProduct varchar(100) not null,
+    price int not null,
+    remainingProduct int not null,
+    description text null,
+    image longtext,
+    idCategory int not null,
+    foreign key (idCategory) references category(id)
+);
+
+create table cart (
+    id int not null auto_increment primary key,
+    totalMoney int not null,
+    statusPayment boolean,
+    idAccount int not null,
+    foreign key (idAccount) references account(id)
+);
+
+create table cartDetail(
+    id int not null auto_increment primary key,
+    idProduct int not null,
+    foreign key (idProduct) references product(id),
+    idCart int not null,
+    foreign key (idCart) references cart(id)
+);
