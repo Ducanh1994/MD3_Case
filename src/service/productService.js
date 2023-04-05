@@ -14,11 +14,9 @@ class ProductService{
                   reject(err)
               }else {
                   resolve(products)
-                  console.log('thanh cong')
               }
           })
       })
 }
 }
-let product = new ProductService();
-product.findAll();
+module.exports = new ProductService();
