@@ -38,3 +38,6 @@ create table cartDetail(
     idCart int not null,
     foreign key (idCart) references cart(id)
 );
+
+use stores;
+alter table cartdetail add quantity int not null;
