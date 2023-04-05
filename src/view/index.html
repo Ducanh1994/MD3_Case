@@ -19,24 +19,26 @@
 </form>
 <br>
 <br>
-<button type="button" class="btn btn-outline-primary"><a href="/create">Add</a></button>
+<button type="button" class="btn btn-outline-primary"><a href="/create">Click to add new</a></button>
 <br>
 <br>
 <h3>Product List</h3>
 <table class="table">
     <thead>
     <tr>
-        <th scope="col">#</th>
+        <th scope="col">ID</th>
         <th scope="col">Name</th>
         <th scope="col">Price</th>
+        <th scope="col">Remaining Product</th>
+        <th scope="col">Description</th>
+        <th scope="col">Image</th>
         <th scope="col">Category</th>
-        <th scope="col" colspan="2">Action</th>
+        <th scope="col" colspan="2"><span style="margin-left: 20%">Action</span></th>
+
     </tr>
     </thead>
     <tbody>
     {products}
-
-
     </tbody>
 </table>
 </body>
