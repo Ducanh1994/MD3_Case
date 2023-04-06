@@ -27,7 +27,6 @@ class ProductController {
     showHome = (req, res) => {
         fs.readFile('./view/index.html', "utf-8", async (err, indexHtml) => {
             let products = await productService.findAll();
-            console.log(products)
             indexHtml = this.getProductHtml(products, indexHtml);
             res.write(indexHtml);
             res.end();
