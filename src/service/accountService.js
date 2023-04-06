@@ -22,7 +22,19 @@ class AccountService {
                 }
             })
         })
-
+    }
+    signUpAccount = (account) => {
+        return new Promise((resolve,reject) => {
+            this.connect.query(`insert into account (username,password) 
+                                values ('${account.username}','${account.password}')`,(err)=>{
+                if (err){
+                    reject(err)
+                }
+                else {
+                    resolve("Sign Up Success")
+                }
+            })
+        })
     }
 }
 module.exports = new AccountService();
