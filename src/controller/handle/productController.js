@@ -1,4 +1,4 @@
-const fs = require('fs');
+ const fs = require('fs');
 const qs = require('qs');
 const productService = require('../../service/productService');
 const categoryService = require('../../service/categoryService');
