@@ -16,19 +16,19 @@ class ProductController {
           <td>${item.description}</td>
           <td>${item.image}</td>
           <td>${item.nameCategory}</td>
-          <td><a type="button" href=""></a>Edit</td>
-          <td><a type="button" href=""></a>Remove</td>`
+          <td><a href="/edit/${item.id}"><button>Edit</button></a></td>
+          <td><a href="/remove/${item.id}"><button>Remove</button></a></td>`
         })
 
-        indexHtml = indexHtml.replace('{products}',productHtml);
+        indexHtml = indexHtml.replace('{products}', productHtml);
         return indexHtml;
     }
 
-    showHome = (req,res) => {
-        fs.readFile('./view/index.html',"utf-8",async (err,indexHtml) => {
+    showHome = (req, res) => {
+        fs.readFile('./view/index.html', "utf-8", async (err, indexHtml) => {
             let products = await productService.findAll();
             console.log(products)
-            indexHtml = this.getProductHtml(products,indexHtml);
+            indexHtml = this.getProductHtml(products, indexHtml);
             res.write(indexHtml);
             res.end();
         })
@@ -63,6 +63,70 @@ class ProductController {
                 }
             })
         }
+    }
+
+    removeProduct = (req, res, id) => {
+        productService.removeProduct(id);
+        res.writeHead(301, {'location': '/home'});
+        res.end();
+    }
+
+    editProduct = (req, res, id) => {
+        if (req.method === "GET") {
+            fs.readFile("./view/product/edit.html", "utf-8", async (err, editHtml) => {
+                let product = await productService.findById(id);
+                let categories = await categoryService.findAll();
+                console.log(product)
+                editHtml = editHtml.replace('{name}', product[0].nameProduct);
+                editHtml = editHtml.replace('{price}', product[0].price);
+                editHtml = editHtml.replace('{remaining_product}', product[0].remainingProduct);
+                editHtml = editHtml.replace('{description}', product[0].description);
+                editHtml = editHtml.replace('{image}', product[0].image);
+                let htmlCategory = '';
+                categories.map(item => {
+                    htmlCategory += `<option value="${item.id}">${item.nameCategory}</option>`
+                })
+                editHtml = editHtml.replace('{categories}',htmlCategory);
+                res.write(editHtml);
+                res.end();
+             })
+          }
+        else {
+            let data = '';
+            req.on('data', chunk => {
+                data += chunk
+            })
+            req.on('end', async err => {
+                if (err) {
+                    console.log(err);
+                } else {
+                    let product = qs.parse(data);
+                    let editProduct = await productService.editProduct(product, id)
+                    res.writeHead(301, {'location': '/home'})
+                    res.end();
+                }
+            })
+        }
+    }
+
+    searchProduct = (req,res)=> {
+        let data = '';
+        req.on('data', chunk => {
+            data += chunk
+        })
+        req.on('end', async err => {
+            if (err) {
+                console.log(err);
+            } else {
+                let name = qs.parse(data);
+                let products = await productService.searchProduct(name);
+                fs.readFile("./view/index.html","utf-8",(err,data) =>{
+                    data = this.getProductHtml(products,data);
+                    res.write(data);
+                    res.end();
+                })
+            }
+        })
     }
 
 }
