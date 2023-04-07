@@ -7,7 +7,10 @@ const router = {
      "create": productController.createProduct,
      "remove": productController.removeProduct,
      "edit": productController.editProduct,
-     "search": productController.searchProduct
+     "search": productController.searchProduct,
+     "signup": accountController.signUpAccount,
+     "filter": productController.filterCategory,
+     "subpage":productController.showSub
 }
 
 module.exports = router;

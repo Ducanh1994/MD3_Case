@@ -3,65 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <title>Home</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js" integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"></script>
-    <style>
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            text-align: center;
-        }
-        td {
-            padding: 10px;
-        }
-        td:first-child {
-            text-align: left;
-        }
-        td:last-child {
-            text-align: right;
-        }
-        td:nth-child(2) {
-            text-align: center;
-        }
-        .btn {
-            margin-right: 10px;
-            width: 80px;
-
-        }
-        .my-button {
-            width: 80px;
-            height: 40px;
-            padding: 10px; /* Đảm bảo padding giống nhau cho tất cả các nút */
-            border: 2px solid black; /* Đảm bảo border giống nhau cho tất cả các nút */
-            text-align: center;
-        }
-    </style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+          integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+            integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct"
+            crossorigin="anonymous"></script>
 </head>
 <body>
-<h3>Product List  </h3>
+<center><h1>Interior Design Products</h1></center>
 <nav class="navbar navbar-light" style="background-color: #e3f2fd;">
-    <div style="display: flex; justify-content: space-between; ">
-        <form action="/search" method="POST">
-            <div  style="display: flex; justify-content: space-between; ">
-            <input type="text" name="search" placeholder="search" class="form-control">
-            <button type="submit" class="btn btn-outline-primary" >Search</button>
-            </div>
-        </form>
-        <div style="width: 220px"><a href="/create"><button  style="width: 200px" type="button" class="btn btn-outline-primary">Click to add new</button></a></div>
-    </div>
+    <form action="/search" method="POST">
+        <div style="display: flex; justify-content: space-between;">
+        <input type="text" name="search" placeholder="Search by name" class="form-control">
+        <button type="submit" class="btn btn-outline-primary">Search</button>
+        </div>
+    </form>
+    <button type="button" class="btn btn-outline-primary"><a href="/create">Click to add new</a></button>
 </nav>
 <br>
+<form action="/filter" method="post">
+    <th>Product Filter</th>
+    <br>
+    <select name="filter">{filter}</select>
+    <button>Submit</button>
+</form>
+<br>
 
-<!--<div style="display: flex; justify-content: space-between; ">
-    <form action="/search" method="POST">
-        <input type="text" name="search" placeholder="search">
-        <button type="submit">Search</button>
-    </form>
-    <div style="width: 220px"><a href="/create"><button  style="width: 200px" type="button" class="btn btn-outline-primary">Click to add new</button></a></div>
-</div>-->
-
+<br>
+<br>
 <table class="table">
     <thead class="thead-dark">
     <tr>
@@ -72,7 +44,7 @@
         <th scope="col">Description</th>
         <th scope="col">Image</th>
         <th scope="col">Category</th>
-        <th scope="col" colspan="3"><span style=" text-align: center;">Action</span></th>
+        <th scope="col" colspan="3"><span style="margin-left: 35%">Action</span></th>
 
     </tr>
     </thead>

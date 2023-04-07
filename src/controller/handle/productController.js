@@ -28,10 +28,55 @@ class ProductController {
         return indexHtml;
     }
 
+    getSubProductsHtml = (products,subHtml) =>{
+        let productHtml = ''
+        products.map(item => {
+            productHtml += `
+        <tr>
+          <td>${item.nameProduct}</td>
+          <td>${item.price}</td>
+          <td>${item.remainingProduct}</td>
+          <td>${item.description}</td>
+          <td>${item.image}</td>
+          <div class = "btn">
+          <td><a href="/add/${item.id}"><button type="button" class="btn btn-primary" >Add to cart</button></a></td>
+         </div>
+            </tr>`
+        })
+
+        subHtml = subHtml.replace('{products}', productHtml);
+        return subHtml;
+    }
+    showSub = (req, res) => {
+        fs.readFile('./view/sub.html', "utf-8", async (err, subHtml) => {
+            let products = await productService.findAll();
+            subHtml = this.getSubProductsHtml(products,subHtml)
+
+            let htmlCategory = '';
+            let categories = await categoryService.findAll();
+
+            categories.map(item => {
+                htmlCategory += `<option value="${item.id}">${item.nameCategory}</option>`
+            })
+            subHtml = subHtml.replace('{filter}', htmlCategory);
+
+            res.write(subHtml);
+            res.end();
+        })
+    }
     showHome = (req, res) => {
         fs.readFile('./view/index.html', "utf-8", async (err, indexHtml) => {
             let products = await productService.findAll();
             indexHtml = this.getProductHtml(products, indexHtml);
+
+            let htmlCategory = '';
+            let categories = await categoryService.findAll();
+
+            categories.map(item => {
+                htmlCategory += `<option value="${item.id}">${item.nameCategory}</option>`
+            })
+            indexHtml = indexHtml.replace('{filter}', htmlCategory);
+
             res.write(indexHtml);
             res.end();
         })
@@ -89,12 +134,11 @@ class ProductController {
                 categories.map(item => {
                     htmlCategory += `<option value="${item.id}">${item.nameCategory}</option>`
                 })
-                editHtml = editHtml.replace('{categories}',htmlCategory);
+                editHtml = editHtml.replace('{categories}', htmlCategory);
                 res.write(editHtml);
                 res.end();
-             })
-          }
-        else {
+            })
+        } else {
             let data = '';
             req.on('data', chunk => {
                 data += chunk
@@ -112,7 +156,7 @@ class ProductController {
         }
     }
 
-    searchProduct = (req,res)=> {
+    searchProduct = (req, res) => {
         let data = '';
         req.on('data', chunk => {
             data += chunk
@@ -123,15 +167,49 @@ class ProductController {
             } else {
                 let name = qs.parse(data);
                 let products = await productService.searchProduct(name);
-                fs.readFile("./view/index.html","utf-8",(err,data) =>{
-                    data = this.getProductHtml(products,data);
+                fs.readFile("./view/index.html", "utf-8", (err, data) => {
+                    data = this.getProductHtml(products, data);
                     res.write(data);
                     res.end();
                 })
             }
         })
     }
+    filterCategory = (req, res) => {
+        if (req.method === "GET") {
+            fs.readFile("./view/index.html", "utf-8", async (err, indexHtml) => {
+                let htmlCategory = '';
+                let categories = await categoryService.findAll();
 
+                categories.map(item => {
+                    htmlCategory += `<option value="${item.id}">${item.nameCategory}</option>`
+                })
+                indexHtml = indexHtml.replace('{filter}', htmlCategory);
+                res.write(indexHtml);
+                res.end();
+            })
+        }
+        else {
+            let data = '';
+            req.on('data', chunk => {
+                data += chunk
+            })
+            req.on('end', async err => {
+                if (err) {
+                    console.log(err);
+                } else {
+                    let option = qs.parse(data);
+                    console.log("option:", option, "id:", +(option["filter"]))
+                    let products = await categoryService.filterCategory(+(option["filter"]));
+                    fs.readFile("./view/index.html", "utf-8", (err, data) => {
+                        data = this.getProductHtml(products, data);
+                        res.write(data);
+                        res.end();
+                    })
+                }
+            })
+        }
+    }
 }
 
 module.exports = new ProductController();
