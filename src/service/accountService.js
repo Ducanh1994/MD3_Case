@@ -23,18 +23,36 @@ class AccountService {
             })
         })
     }
-    signUpAccount = (account) => {
-        return new Promise((resolve,reject) => {
-            this.connect.query(`insert into account (username,password) 
-                                values ('${account.username}','${account.password}')`,(err)=>{
-                if (err){
+    createUser(account) {
+        let connect = connection.getConnection()
+        return new Promise((resolve, reject) => {
+            connect.query(`insert into store.users (username, password) values ('${account.username}','${account.password}')`,(err)=>{
+                if (err) {
                     reject(err)
-                }
-                else {
-                    resolve("Sign Up Success")
+                }else{
+                    resolve(account)
                 }
             })
         })
     }
+    checkUsernameExists = (user) => {
+        console.log(user)
+        return new Promise((resolve, reject) => {
+            let connect = connection.getConnection()
+            let sql =`select username as count from store.users where username = '${user.username}'`
+            connect.query(sql, (err, result) => {
+                if (err) {
+                    reject(err)
+                }
+                if (result.length > 0) {
+                    resolve(result)
+                } else {
+                    resolve(false)
+                }
+            });
+        });
+    }
+
+
 }
 module.exports = new AccountService();

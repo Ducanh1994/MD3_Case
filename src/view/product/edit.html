@@ -10,11 +10,65 @@
   <input type="text" name="price" value="{price}">
   <input type="text" name="remaining_product" value="{remaining_product}">
   <input type="text" name="description" value="{description}">
-  <input type="text" name="image" value="{image}">
+  <input type="hidden" name="image" id="image" placeholder="Image" value="{image}">
+  <input type="file" id="fileButton" onchange="uploadImage(event)">
   <select name="id_category">
     {categories}
   </select>
   <button>Submit</button>
+
+  <h1>Hello GFG</h1>
+  <div id="imgDiv"></div>
+  <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase.js"></script>
+  <script>
+    // Initialize Firebase
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    const firebaseConfig = {
+      apiKey: "AIzaSyAY06TAGdE4VW1dFg1wOMpkndSWHS5uBrw",
+      authDomain: "stores-2857e.firebaseapp.com",
+      projectId: "stores-2857e",
+      storageBucket: "stores-2857e.appspot.com",
+      messagingSenderId: "661998835325",
+      appId: "1:661998835325:web:23985c4710f5d92446c314",
+      measurementId: "G-XNXV6QQCXE"
+    };
+    firebase.initializeApp(firebaseConfig);
+  </script>
+
+  <script type="text/javascript">
+    function uploadImage(e) {
+      let fbBucketName = 'images';
+      let uploader = document.getElementById('uploader');
+      let file = e.target.files[0];
+      let storageRef = firebase.storage().ref(`${fbBucketName}/${file.name}`);
+      let uploadTask = storageRef.put(file);
+      uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED,
+              function (snapshot) {
+                uploader.value = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                switch (snapshot.state) {
+                  case firebase.storage.TaskState.PAUSED:
+                    break;
+                  case firebase.storage.TaskState.RUNNING:
+                    break;
+                }
+              }, function (error) {
+                switch (error.code) {
+                  case 'storage/unauthorized':
+                    break;
+                  case 'storage/canceled':
+                    break;
+                  case 'storage/unknown':
+                    break;
+                }
+              }, function () {
+                let downloadURL = uploadTask.snapshot.downloadURL;
+                document.getElementById('imgDiv').innerHTML = `<img src="${downloadURL}" alt="">`
+                alert(downloadURL)
+                document.getElementById('image').value = downloadURL
+              });
+    }
+  </script>
+
 </form>
 </body>
 </html>

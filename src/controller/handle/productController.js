@@ -9,15 +9,15 @@ class ProductController {
         products.map(item => {
             productHtml += `
         <tr>
-          <th>${item.id}</th>
+          <th style="background-color: sandybrown">${item.id}</th>
           <td>${item.nameProduct}</td>
-          <td>${item.price}</td>
+          <td style="background-color: sandybrown">${item.price}</td>
           <td>${item.remainingProduct}</td>
-          <td>${item.description}</td>
-          <td>${item.image}</td>
-          <td>${item.nameCategory}</td>
-          <td><a href="/edit/${item.id}"><button>Edit</button></a></td>
-          <td><a href="/remove/${item.id}"><button>Remove</button></a></td>`
+          <td style="background-color: sandybrown">${item.description}</td>
+          <td><img src="${item.image}" alt="" style="width: 50px;height: 50px"></td>
+          <td style="background-color: sandybrown">${item.nameCategory}</td>
+          <td><a type="button" class="btn btn-outline-secondary" href="/edit/${item.id}">Edit</a></td>
+          <td><a  type="button" class="btn btn-outline-danger" href="/remove/${item.id}">Remove</a></td>`
         })
 
         indexHtml = indexHtml.replace('{products}', productHtml);
@@ -36,6 +36,7 @@ class ProductController {
             categories.map(item => {
                 htmlCategory += `<option value="${item.id}">${item.nameCategory}</option>`
             })
+
             indexHtml = indexHtml.replace('{filter}', htmlCategory);
 
             res.write(indexHtml);
@@ -68,17 +69,36 @@ class ProductController {
                     let product = qs.parse(data);
                     let addProduct = await productService.createProduct(product)
                     res.writeHead(301, {'location': '/home'})
+                    res.write(`<script>alert('Product created successfully.')</script>`); // Add alert message
                     res.end();
                 }
             })
         }
     }
 
-    removeProduct = (req, res, id) => {
-        productService.removeProduct(id);
-        res.writeHead(301, {'location': '/home'});
-        res.end();
+    async removeProduct(req, res, id) {
+        if (req.method === 'GET') {
+
+            fs.readFile('./view/product/delete.html', 'utf-8', async (err, removeHtml) => {
+                if (err) {
+                    console.log(err);
+                }
+                else {
+                    res.writeHead(200, 'text/html');
+                    removeHtml = removeHtml.replace('{id}', id);
+                    res.write(removeHtml);
+                    res.end();
+                }
+            });
+        }
+        else {
+            let mess = await productService.removeProduct(id);
+            console.log(mess);
+            res.writeHead(301, {'location': '/home'});
+            res.end();
+        }
     }
+
 
     editProduct = (req, res, id) => {
         if (req.method === "GET") {
@@ -111,6 +131,7 @@ class ProductController {
                     let product = qs.parse(data);
                     let editProduct = await productService.editProduct(product, id)
                     res.writeHead(301, {'location': '/home'})
+                    res.write(`<script>alert('Product edit successfully.')</script>`); // Add alert message
                     res.end();
                 }
             })

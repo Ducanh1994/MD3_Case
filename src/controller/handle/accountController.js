@@ -2,7 +2,7 @@ const fs = require('fs');
 const qs = require('qs');
 const accountService = require('../../service/accountService');
 const cookie = require('cookie');
-
+const alert = require('alert');
 class AccountController {
     login = (req, res) => {
         if (req.method === 'GET') {
@@ -20,6 +20,7 @@ class AccountController {
                 let account = qs.parse(data);
                 let accountInDatabase = await accountService.getAccount(account);
                 if (accountInDatabase.length === 0) {
+                    alert('wrong account,password or not registered ');
                     res.writeHead(301, {'location': '/'});
                     res.end()
                 } else {
@@ -34,6 +35,7 @@ class AccountController {
         }
     }
 
+
     signUpAccount = (req,res) => {
         if (req.method === 'GET') {
             fs.readFile('./view/account/signup.html', 'utf-8', (err, signupHtml) => {
@@ -42,17 +44,28 @@ class AccountController {
             })
         }
         else {
-            let data = ''
-            req.on('data', chunk => {
+            let data='';
+            req.on('data',chunk =>{
                 data += chunk
             })
-            req.on('end', async () => {
-                let account = qs.parse(data);
-                let accountInDatabase = await accountService.signUpAccount(account);
-                res.writeHead(301, {'location': '/'});
-                res.end();
+            req.on('end',async()=>{
+                let user = qs.parse(data);
+                let existingUser = await accountService.checkUsernameExists(user);
+                if(existingUser.length>0){
+                    res.writeHead(301,{'location':'/signup'})
+                    res.end()
+                }else{
+                    await accountService.createUser(user)
+                    res.writeHead(301,{'location':'/'})
+                    res.end()
+                }
             })
         }
+    }
+    logout =(req, res) => {
+        res.setHeader('Set-Cookie',['user=;max-age=0'])
+        res.end('cookie cleared')
+        res.writeHead(301,{'location': '/'})
     }
 }
 

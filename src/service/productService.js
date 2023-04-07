@@ -73,7 +73,7 @@ class ProductService {
                                     price            = ${product.price},
                                     remainingProduct = ${product.remaining_product},
                                     description      = '${product.description}',
-                                    image            = ${product.image},
+                                    image            = '${product.image}',
                                     idCategory       = ${product.id_category}
                                 where id = ${id}`,(err) => {
                 if (err) {
