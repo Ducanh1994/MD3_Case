@@ -2,6 +2,7 @@
 const qs = require('qs');
 const productService = require('../../service/productService');
 const categoryService = require('../../service/categoryService');
+const cartService = require('../../service/cartService');
 
 class ProductController {
     getProductHtml = (products, indexHtml) => {
@@ -26,6 +27,35 @@ class ProductController {
 
         indexHtml = indexHtml.replace('{products}', productHtml);
         return indexHtml;
+    }
+
+    getCart = (products,viewCartHtml) =>{
+        let cartHtml = '';
+        products.map(item =>{
+            cartHtml += `
+            <tr>
+          <td>${item.nameProduct}</td>
+          <td>${item.price}</td>
+          <td>${item.quantity}</td>
+          <td>${item.description}</td>
+          <td>${item.image}</td>
+          <div class = "btn">
+          <td><a href="/add/${item.id}"><button type="button" class="btn btn-primary" >Add</button></a></td>
+          <td><a href="/edit/${item.id}"><button type="button" class="btn btn-warning" >Edit</button></a></td>
+         <td><a href="/remove/${item.id}"><button type="button"   class="btn btn-danger" >Delete</button></a></td>
+         </div>
+            </tr>`
+        })
+        viewCartHtml = viewCartHtml.replace('{products}',cartHtml);
+        return viewCartHtml;
+    }
+    showCart = (req,res) =>{
+        fs.readFile('/Users/nguyennhattan/WebstormProjects/12/ngay16/baingay4_4/MD3_Case/src/view/cart/viewCart.html','utf-8',async (err,viewCartHtml)=>{
+            let products = await cartService.findAllCart();
+            viewCartHtml = this.getCart(products,viewCartHtml);
+            res.write(viewCartHtml);
+            res.end();
+        })
     }
 
     getSubProductsHtml = (products,subHtml) =>{

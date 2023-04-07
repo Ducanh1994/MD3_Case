@@ -17,12 +17,8 @@ class AccountController {
                 data += chunk
             })
             req.on('end', async () => {
-                console.log(data);
                 let account = qs.parse(data);
-                console.log(account)
                 let accountInDatabase = await accountService.getAccount(account);
-                console.log(accountInDatabase);
-                console.log(accountInDatabase[0].role);
                 if (accountInDatabase.length === 0) {
                     res.writeHead(301, {'location': '/'});
                     res.end()
