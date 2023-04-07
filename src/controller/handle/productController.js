@@ -38,7 +38,6 @@ class ProductController {
             })
 
             indexHtml = indexHtml.replace('{filter}', htmlCategory);
-
             res.write(indexHtml);
             res.end();
         })
@@ -191,6 +190,81 @@ class ProductController {
                 }
             })
         }
+    }
+
+    findBestSeller = (req, res) => {
+        let data = '';
+        req.on('data', chunk => {
+            data += chunk
+        })
+        req.on('end', async err => {
+            if (err) {
+                console.log(err);
+            } else {
+                let products = await productService.findBestSeller();
+                console.log(1,products)
+                fs.readFile("./view/index.html", "utf-8", (err, data) => {
+                    data = this.getProductHtml(products, data);
+                    res.write(data);
+                    res.end();
+                })
+            }
+        })
+    }
+    priceLow = (req,res) => {
+        let data = '';
+        req.on('data', chunk => {
+            data += chunk
+        })
+        req.on('end', async err => {
+            if (err) {
+                console.log(err);
+            } else {
+                let products = await productService.priceLow();
+                fs.readFile("./view/index.html", "utf-8", (err, data) => {
+                    data = this.getProductHtml(products, data);
+                    res.write(data);
+                    res.end();
+                })
+            }
+        })
+    }
+    priceHigh = (req,res) => {
+        let data = '';
+        req.on('data', chunk => {
+            data += chunk
+        })
+        req.on('end', async err => {
+            if (err) {
+                console.log(err);
+            } else {
+                let products = await productService.priceHigh();
+                fs.readFile("./view/index.html", "utf-8", (err, data) => {
+                    data = this.getProductHtml(products, data);
+                    res.write(data);
+                    res.end();
+                })
+            }
+        })
+    }
+    priceRange = (req,res) => {
+        let data = '';
+        req.on('data', chunk => {
+            data += chunk
+        })
+        req.on('end', async err => {
+            if (err) {
+                console.log(err);
+            } else {
+                let products = qs.parse(data);
+                let listProduct = await productService.priceRange(products);
+                fs.readFile("./view/index.html", "utf-8", (err, data) => {
+                    data = this.getProductHtml(listProduct, data);
+                    res.write(data);
+                    res.end();
+                })
+            }
+        })
     }
 }
 

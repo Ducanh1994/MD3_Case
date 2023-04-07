@@ -54,14 +54,40 @@
 <!--    <button type="submit">Search</button>-->
 <!--</form>-->
 <br>
-<form action="/filter" method="post" style="align-items: center">
+<center>
+    <button><a href="/bestseller">Best Seller</a></button>
+</center>
+<br>
+<center>
+    <th>Display By Price</th>
+    <br>
+    <a href="/lowprice">Price Low to High</a></button>
+    <br>
+    <a href="/highprice">Price High to Low</a></button>
+</center>
+<br>
+<form action="/pricerange" method="post">
+    <th>Price Range</th>
+    <br>
+    <input type="number" name="min" placeholder="Min">
+    <input type="number" name="max" placeholder="Max">
+    <br>
+    <button>Submit</button>
+</form>
+<br>
+<form action="/filter" method="post">
     <th>Product Filter</th>
     <br>
+<!--    <input type="radio" name="ban"> Desk-->
+<!--    <br>-->
+<!--    <input type="radio" name="ghe"> Chair-->
+<!--    <br>-->
+<!--    <input type="radio" name="tu"> Wardrobe-->
     <select name="filter">{filter}</select>
     <button>Submit</button>
 </form>
 <br>
-<!--<button type="button" class="btn btn-outline-primary"><a href="/create">Click to add new</a></button>-->
+<button type="button" class="btn btn-outline-primary"><a href="/create">Click to add new</a></button>
 <br>
 <br>
 <table class="table">
