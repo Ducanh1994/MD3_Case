@@ -23,8 +23,16 @@ class AccountController {
                     alert('wrong account,password or not registered ');
                     res.writeHead(301, {'location': '/'});
                     res.end()
-                } else {
+
+                } else if (accountInDatabase[0].role === 'user'){
                     res.setHeader('Set-Cookie', cookie.serialize('account', JSON.stringify(accountInDatabase[0]), {
+                        httpOnly: true,
+                        maxAge: 60 * 60 * 24 * 7 // 1 week
+                    }));
+                    res.writeHead(301, {'location': '/subpage'});
+                    res.end()
+                }else if(accountInDatabase[0].role === 'admin') {
+                     res.setHeader('Set-Cookie', cookie.serialize('account', JSON.stringify(accountInDatabase[0]), {
                         httpOnly: true,
                         maxAge: 60 * 60 * 24 * 7 // 1 week
                     }));

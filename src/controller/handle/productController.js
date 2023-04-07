@@ -2,6 +2,7 @@
 const qs = require('qs');
 const productService = require('../../service/productService');
 const categoryService = require('../../service/categoryService');
+const cartService = require('../../service/cartService');
 
 class ProductController {
     getProductHtml = (products, indexHtml) => {
@@ -24,6 +25,71 @@ class ProductController {
         return indexHtml;
     }
 
+    getCart = (products,viewCartHtml) =>{
+        let cartHtml = '';
+        products.map(item =>{
+            cartHtml += `
+            <tr>
+          <td>${item.nameProduct}</td>
+          <td>${item.price}</td>
+          <td>${item.quantity}</td>
+          <td>${item.description}</td>
+          <td>${item.image}</td>
+          <div class = "btn">
+          <td><a href="/add/${item.id}"><button type="button" class="btn btn-primary" >Add</button></a></td>
+          <td><a href="/edit/${item.id}"><button type="button" class="btn btn-warning" >Edit</button></a></td>
+         <td><a href="/remove/${item.id}"><button type="button"   class="btn btn-danger" >Delete</button></a></td>
+         </div>
+            </tr>`
+        })
+        viewCartHtml = viewCartHtml.replace('{products}',cartHtml);
+        return viewCartHtml;
+    }
+    showCart = (req,res) =>{
+        fs.readFile('./view/product/cart.html','utf-8',async (err,viewCartHtml)=>{
+            let products = await cartService.findAllCart();
+            viewCartHtml = this.getCart(products,viewCartHtml);
+            res.write(viewCartHtml);
+            res.end();
+        })
+    }
+
+    getSubProductsHtml = (products,subHtml) =>{
+        let productHtml = ''
+        products.map(item => {
+            productHtml += `
+        <tr>
+          <td>${item.nameProduct}</td>
+          <td>${item.price}</td>
+          <td>${item.remainingProduct}</td>
+          <td>${item.description}</td>
+          <td>${item.image}</td>
+          <div class = "btn">
+          <td><a href="/add/${item.id}"><button type="button" class="btn btn-primary" >Add to cart</button></a></td>
+         </div>
+            </tr>`
+        })
+
+        subHtml = subHtml.replace('{products}', productHtml);
+        return subHtml;
+    }
+    showSub = (req, res) => {
+        fs.readFile('./view/sub.html', "utf-8", async (err, subHtml) => {
+            let products = await productService.findAll();
+            subHtml = this.getSubProductsHtml(products,subHtml)
+
+            let htmlCategory = '';
+            let categories = await categoryService.findAll();
+
+            categories.map(item => {
+                htmlCategory += `<option value="${item.id}">${item.nameCategory}</option>`
+            })
+            subHtml = subHtml.replace('{filter}', htmlCategory);
+
+            res.write(subHtml);
+            res.end();
+        })
+    }
     showHome = (req, res) => {
         fs.readFile('./view/index.html', "utf-8", async (err, indexHtml) => {
             let products = await productService.findAll();
@@ -94,7 +160,6 @@ class ProductController {
         }
     }
 
-
     editProduct = (req, res, id) => {
         if (req.method === "GET") {
             fs.readFile("./view/product/edit.html", "utf-8", async (err, editHtml) => {
@@ -126,7 +191,6 @@ class ProductController {
                     let product = qs.parse(data);
                     let editProduct = await productService.editProduct(product, id)
                     res.writeHead(301, {'location': '/home'})
-                    res.write(`<script>alert('Product edit successfully.')</script>`); // Add alert message
                     res.end();
                 }
             })
@@ -157,6 +221,7 @@ class ProductController {
             fs.readFile("./view/index.html", "utf-8", async (err, indexHtml) => {
                 let htmlCategory = '';
                 let categories = await categoryService.findAll();
+
                 categories.map(item => {
                     htmlCategory += `<option value="${item.id}">${item.nameCategory}</option>`
                 })

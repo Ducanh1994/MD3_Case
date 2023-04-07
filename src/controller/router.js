@@ -10,6 +10,8 @@ const router = {
      "search": productController.searchProduct,
      "signup": accountController.signUpAccount,
      "filter": productController.filterCategory,
+     "subpage": productController.showSub,
+     "cart": productController.showCart,
      "logout": accountController.logout,
      "bestseller" :productController.findBestSeller,
      "lowprice" : productController.priceLow,
