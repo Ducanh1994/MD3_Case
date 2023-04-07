@@ -20,7 +20,19 @@ class CategoryService {
             })
         })
     }
-
+    filterCategory = (ID) => {
+        return new Promise((resolve, reject) => {
+            this.connect.query(`select *
+                                from product
+                                where product.idCategory = ${ID}`, (err, products) => {
+                if (err) {
+                    reject(err)
+                } else {
+                    resolve(products)
+                }
+            })
+        })
+    }
 }
 
 module.exports = new CategoryService();

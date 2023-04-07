@@ -33,6 +33,27 @@ class AccountController {
             })
         }
     }
+
+    signUpAccount = (req,res) => {
+        if (req.method === 'GET') {
+            fs.readFile('./view/account/signup.html', 'utf-8', (err, signupHtml) => {
+                res.write(signupHtml);
+                res.end();
+            })
+        }
+        else {
+            let data = ''
+            req.on('data', chunk => {
+                data += chunk
+            })
+            req.on('end', async () => {
+                let account = qs.parse(data);
+                let accountInDatabase = await accountService.signUpAccount(account);
+                res.writeHead(301, {'location': '/'});
+                res.end();
+            })
+        }
+    }
 }
 
 module.exports = new AccountController();
