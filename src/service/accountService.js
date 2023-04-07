@@ -35,11 +35,11 @@ class AccountService {
             })
         })
     }
-    checkUsernameExists = (user) => {
-        console.log(user)
+    checkUsernameExists = (account) => {
+        console.log(account)
         return new Promise((resolve, reject) => {
             let connect = connection.getConnection()
-            let sql =`select username as count from stores.account where username = '${user.username}'`
+            let sql =`select username as count from stores.account where username = '${account.username}'`
             connect.query(sql, (err, result) => {
                 if (err) {
                     reject(err)
