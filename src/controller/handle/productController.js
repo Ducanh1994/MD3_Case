@@ -38,6 +38,9 @@ class ProductController {
             })
             indexHtml = indexHtml.replace('{filter}', htmlCategory);
 
+            // let htmlDisplayPrice = '';
+            // let
+
             res.write(indexHtml);
             res.end();
         })
@@ -170,6 +173,29 @@ class ProductController {
                 }
             })
         }
+    }
+
+    findBestSeller = (req, res) => {
+        let data = '';
+        req.on('data', chunk => {
+            data += chunk
+        })
+        req.on('end', async err => {
+            if (err) {
+                console.log(err);
+            } else {
+                let products = await productService.findBestSeller();
+                console.log(1,products)
+                fs.readFile("./view/index.html", "utf-8", (err, data) => {
+                    data = this.getProductHtml(products, data);
+                    res.write(data);
+                    res.end();
+                })
+            }
+        })
+    }
+    displayPrice = (req,res) => {
+
     }
 }
 

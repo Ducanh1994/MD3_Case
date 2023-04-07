@@ -97,6 +97,42 @@ class ProductService {
             })
         })
     }
+    findBestSeller = () => {
+        return new Promise((resolve,reject) => {
+            this.connect.query(`select * from product order by price limit 5`,(err,products) => {
+                if (err) {
+                    reject(err)
+                }
+                else {
+                    resolve(products)
+                }
+            })
+        })
+    }
+    priceLow = () => {
+        return new Promise((resolve,reject) => {
+            this.connect.query(`select * from product order by price`,(err,products)=>{
+                if (err){
+                    reject(err)
+                }
+                else {
+                    resolve(products)
+                }
+            })
+        })
+    }
+    priceHigh = () => {
+        return new Promise((resolve,reject) => {
+            this.connect.query(`select * from product order by price desc `,(err,products)=>{
+                if (err){
+                    reject(err)
+                }
+                else {
+                    resolve(products)
+                }
+            })
+        })
+    }
 }
 
 

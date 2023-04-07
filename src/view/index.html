@@ -19,14 +19,21 @@
     <button type="submit">Search</button>
 </form>
 <br>
+<center>
+    <button>
+        <a href="/bestseller">Best Seller</a></button>
+</center>
+<br>
+<center><form action="" method="post">
+    <th>Display By Price</th>
+    <br>
+    <select name="display_price">{display_price}</select>
+    <button>Submit</button>
+</form></center>
+<br>
 <form action="/filter" method="post">
     <th>Product Filter</th>
     <br>
-<!--    <input type="radio" name="ban"> Desk-->
-<!--    <br>-->
-<!--    <input type="radio" name="ghe"> Chair-->
-<!--    <br>-->
-<!--    <input type="radio" name="tu"> Wardrobe-->
     <select name="filter">{filter}</select>
     <button>Submit</button>
 </form>
