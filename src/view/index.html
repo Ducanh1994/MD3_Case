@@ -12,90 +12,98 @@
             integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct"
             crossorigin="anonymous"></script>
 </head>
+<style>
+    .hung {
+        display: flex;
+    }
+    .hung2{
+        margin-left: 50px;
+        margin-right: 50px;
+    }
+</style>
 <body>
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="/home">KAGE</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
+<div class="hung2">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="/home">KAGE</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/create">create</a>
-            </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
-                    filter
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link disabled">Disabled</a>
-            </li>
-        </ul>
-        <a href="/"><button class="btn btn-danger">log out</button></a>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent" style="padding-top: 20px">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/create">create</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
+                       aria-expanded="false">
+                        sort
+                    </a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="/highprice">Price High To Low</a>
+                        <a class="dropdown-item" href="/lowprice">Price Low to High</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="/home">All Product</a>
+                    </div>
+                    <br>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/bestseller">best saler</a>
+                </li>
 
-        <form class="form-inline my-2 my-lg-0" action="/search" method="post">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-        </form>
+            </ul>
+            <a href="/">
+                <button class="btn btn-danger">log out</button>
+            </a>
+            <form class="form-inline my-2 my-lg-0" action="/search" method="post">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"
+                       name="search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>
+        </div>
+    </nav>
+    <div class="hung">
+        <div style="display: flex;flex-direction: row">
+            <form action="/filter" method="post">
+                <th>Product Filter</th>
+                <br>
+                <select name="filter">{filter}</select>
+                <button class="btn btn-secondary">Submit</button>
+            </form>
+        </div>
+        <div class="price" style="margin-left: 750px">
+            <form action="/pricerange" method="post">
+                <th>Price Range</th>
+                <br>
+                <input type="number" name="min" placeholder="Min" style="border-radius: 7px">
+                <input type="number" name="max" placeholder="Max" style="border-radius: 7px">
+
+                <button class="btn btn-secondary">Submit</button>
+            </form>
+        </div>
+
     </div>
-</nav>
-<!--<form action="/search" method="POST">-->
-<!--    <input type="text" name="search" placeholder="Search by name">-->
-<!--    <button type="submit">Search</button>-->
-<!--</form>-->
-<br>
-<center>
-    <button><a href="/bestseller">Best Seller</a></button>
-</center>
-<br>
-<center>
-    <th>Display By Price</th>
     <br>
-    <a href="/lowprice">Price Low to High</a></button>
-    <br>
-    <a href="/highprice">Price High to Low</a></button>
-</center>
-<br>
-<form action="/pricerange" method="post">
-    <th>Price Range</th>
-    <br>
-    <input type="number" name="min" placeholder="Min">
-    <input type="number" name="max" placeholder="Max">
-    <br>
-    <button>Submit</button>
-</form>
-<br>
-<form action="/filter" method="post">
-    <th>Product Filter</th>
-    <br>
-    <select name="filter">{filter}</select>
-    <button>Submit</button>
-</form>
-<br>
-<button type="button" class="btn btn-outline-primary"><a href="/create">Click to add new</a></button>
-<br>
-<br>
-<table class="table">
+    <table class="table">
     <thead>
     <tr>
-        <th scope="col">ID</th>
-        <th scope="col">Name</th>
-        <th scope="col">Price</th>
-        <th scope="col">Remaining Product</th>
-        <th scope="col">Description</th>
-        <th scope="col">Image</th>
-        <th scope="col">Category</th>
-        <th scope="col" colspan="2"><span style="margin-left: 20%">Action</span></th>
+        <th>Name</th>
+        <th style="width: 10%">Price</th>
+        <th style="width: 10%">Remaining Product</th>
+        <th scope="col-2">Description</th>
+        <th style="width: 50px;height: 50px">Image</th>
+        <th style="width: 7%">Category</th>
+        <th scope="col-2" colspan="2"><span style="margin-left: 20%">Action</span></th>
     </tr>
     </thead>
     <tbody>
     {products}
     </tbody>
-</table>
+    </table>
+</div>
 </body>
 </html>

@@ -8,8 +8,8 @@ class ProductController {
         let productHtml = ''
         products.map(item => {
             productHtml += `
-        <tr>
-          <th style="background-color: sandybrown">${item.id}</th>
+        <tr style="margin: auto"> 
+          <th style="background-color: sandybrown;display: none">${item.id}</th>
           <td>${item.nameProduct}</td>
           <td style="background-color: sandybrown">${item.price}</td>
           <td>${item.remainingProduct}</td>
