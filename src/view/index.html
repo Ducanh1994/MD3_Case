@@ -31,11 +31,6 @@
                 <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
                     filter
                 </a>
-                <form action="/filter">
-                <div class="dropdown-menu" >
-                    {filter}
-                </div>
-                </form>
             </li>
             <li class="nav-item">
                 <a class="nav-link disabled">Disabled</a>
@@ -78,11 +73,6 @@
 <form action="/filter" method="post">
     <th>Product Filter</th>
     <br>
-<!--    <input type="radio" name="ban"> Desk-->
-<!--    <br>-->
-<!--    <input type="radio" name="ghe"> Chair-->
-<!--    <br>-->
-<!--    <input type="radio" name="tu"> Wardrobe-->
     <select name="filter">{filter}</select>
     <button>Submit</button>
 </form>

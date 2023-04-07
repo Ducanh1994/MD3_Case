@@ -11,20 +11,20 @@ class CategoryService {
 
     findAll = () => {
         return new Promise((resolve, reject) => {
-            this.connect.query(`select * from category`, (err, categoryInDatabase) => {
+            this.connect.query(`select * from category`, (err, categories) => {
                 if (err) {
                     reject(err)
                 } else {
-                    resolve(categoryInDatabase)
+                    resolve(categories)
                 }
             })
         })
     }
-    filterCategory = (ID) => {
+    filterCategory = (categoryID) => {
         return new Promise((resolve, reject) => {
-            this.connect.query(`select *
-                                from product
-                                where product.idCategory = ${ID}`, (err, products) => {
+            this.connect.query(`select product.*,category.nameCategory
+                                from product join category on product.idCategory = category.id
+                                where product.idCategory = ${categoryID};`, (err, products) => {
                 if (err) {
                     reject(err)
                 } else {
