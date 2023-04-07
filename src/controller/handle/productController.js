@@ -43,11 +43,14 @@ class ProductController {
             </tr>`
         })
         viewCartHtml = viewCartHtml.replace('{products}',cartHtml);
+        console.log(viewCartHtml)
         return viewCartHtml;
     }
     showCart = (req,res) =>{
-        fs.readFile('./view/product/cart.html','utf-8',async (err,viewCartHtml)=>{
+        fs.readFile('view/cart/viewCart.html','utf-8',async (err,viewCartHtml)=>{
             let products = await cartService.findAllCart();
+            console.log(viewCartHtml)
+            console.log(products);
             viewCartHtml = this.getCart(products,viewCartHtml);
             res.write(viewCartHtml);
             res.end();

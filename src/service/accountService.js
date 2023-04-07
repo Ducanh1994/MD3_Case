@@ -26,7 +26,7 @@ class AccountService {
     createUser(account) {
         let connect = connection.getConnection()
         return new Promise((resolve, reject) => {
-            connect.query(`insert into store.users (username, password) values ('${account.username}','${account.password}')`,(err)=>{
+            connect.query(`insert into stores.account (username, password,role) values ('${account.username}','${account.password}','user')`,(err)=>{
                 if (err) {
                     reject(err)
                 }else{
@@ -39,7 +39,7 @@ class AccountService {
         console.log(user)
         return new Promise((resolve, reject) => {
             let connect = connection.getConnection()
-            let sql =`select username as count from store.users where username = '${user.username}'`
+            let sql =`select username as count from stores.account where username = '${user.username}'`
             connect.query(sql, (err, result) => {
                 if (err) {
                     reject(err)
