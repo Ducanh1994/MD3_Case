@@ -23,7 +23,7 @@
 </style>
 <body>
 <div class="hung2">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <a class="navbar-brand" href="/home">KAGE</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -33,15 +33,15 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent" style="padding-top: 20px">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="/home">Home <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/create">create</a>
+                    <a class="nav-link" href="/create">Create</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
                        aria-expanded="false">
-                        sort
+                        Sort
                     </a>
                     <div class="dropdown-menu">
                         <a class="dropdown-item" href="/highprice">Price High To Low</a>
@@ -52,12 +52,12 @@
                     <br>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/bestseller">best saler</a>
+                    <a class="nav-link" href="/bestseller">Best Seller</a>
                 </li>
 
             </ul>
             <a href="/">
-                <button class="btn btn-danger">log out</button>
+                <button class="btn btn-danger">Log Out</button>
             </a>
             <form class="form-inline my-2 my-lg-0" action="/search" method="post">
                 <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"
@@ -75,7 +75,7 @@
                 <button class="btn btn-secondary">Submit</button>
             </form>
         </div>
-        <div class="price" style="margin-left: 829px">
+        <div class="price" style="margin-left: 800px">
             <form action="/pricerange" method="post">
                 <th>Price Range</th>
                 <br>
@@ -87,9 +87,10 @@
         </div>
 
     </div>
+    <div style="margin-left: 500px;margin-top: 15px" ><h2  style="color: sandybrown">Interior Design Product</h2></div>
+
     <br>
     <table class="table"
-    " >
     <thead>
     <tr>
         <!--        <th scope="col" >ID</th>-->
