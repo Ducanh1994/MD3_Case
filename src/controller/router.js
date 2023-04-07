@@ -10,7 +10,10 @@ const router = {
      "search": productController.searchProduct,
      "signup": accountController.signUpAccount,
      "filter": productController.filterCategory,
-     "bestseller" :productController.findBestSeller
+     "bestseller" :productController.findBestSeller,
+     "lowprice" : productController.priceLow,
+     "highprice" : productController.priceHigh,
+     "pricerange" : productController.priceRange
 }
 
 module.exports = router;

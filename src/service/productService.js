@@ -66,8 +66,8 @@ class ProductService {
             })
         })
     }
-    editProduct = (product,id) => {
-        return new Promise((resolve,reject)=> {
+    editProduct = (product, id) => {
+        return new Promise((resolve, reject) => {
             this.connect.query(`update product
                                 set nameProduct      = '${product.name}',
                                     price            = ${product.price},
@@ -75,11 +75,10 @@ class ProductService {
                                     description      = '${product.description}',
                                     image            = ${product.image},
                                     idCategory       = ${product.id_category}
-                                where id = ${id}`,(err) => {
+                                where id = ${id}`, (err) => {
                 if (err) {
                     reject(err)
-                }
-                else {
+                } else {
                     resolve("Insert Success")
                 }
             })
@@ -88,7 +87,9 @@ class ProductService {
     searchProduct = (name) => {
         console.log(name)
         return new Promise((resolve, reject) => {
-            this.connect.query(`select * from product where nameProduct like '${name.search}%'`, (err, products) => {
+            this.connect.query(`select *
+                                from product
+                                where nameProduct like '${name.search}%'`, (err, products) => {
                 if (err) {
                     reject(err)
                 } else {
@@ -98,34 +99,53 @@ class ProductService {
         })
     }
     findBestSeller = () => {
-        return new Promise((resolve,reject) => {
-            this.connect.query(`select * from product order by price limit 5`,(err,products) => {
+        return new Promise((resolve, reject) => {
+            this.connect.query(`select *
+                                from product
+                                order by price
+                                limit 5`, (err, products) => {
                 if (err) {
                     reject(err)
-                }
-                else {
+                } else {
                     resolve(products)
                 }
             })
         })
     }
     priceLow = () => {
-        return new Promise((resolve,reject) => {
-            this.connect.query(`select * from product order by price`,(err,products)=>{
-                if (err){
+        return new Promise((resolve, reject) => {
+            this.connect.query(`select *
+                                from product
+                                order by price`, (err, products) => {
+                if (err) {
                     reject(err)
-                }
-                else {
+                } else {
                     resolve(products)
                 }
             })
         })
     }
     priceHigh = () => {
-        return new Promise((resolve,reject) => {
-            this.connect.query(`select * from product order by price desc `,(err,products)=>{
-                if (err){
+        return new Promise((resolve, reject) => {
+            this.connect.query(`select *
+                                from product
+                                order by price desc `, (err, products) => {
+                if (err) {
                     reject(err)
+                } else {
+                    resolve(products)
+                }
+            })
+        })
+    }
+    priceRange = (products) => {
+        console.log(products)
+        return new Promise((resolve, reject) => {
+            this.connect.query(`select *
+                                from product
+                                where ${products.min} <= price and price <= ${products.max}`, (err, products) => {
+                if (err) {
+                    reject (err)
                 }
                 else {
                     resolve(products)

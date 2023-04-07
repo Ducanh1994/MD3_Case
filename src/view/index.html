@@ -20,16 +20,25 @@
 </form>
 <br>
 <center>
-    <button>
-        <a href="/bestseller">Best Seller</a></button>
+    <button><a href="/bestseller">Best Seller</a></button>
 </center>
 <br>
-<center><form action="" method="post">
+<center>
     <th>Display By Price</th>
     <br>
-    <select name="display_price">{display_price}</select>
+    <a href="/lowprice">Price Low to High</a></button>
+    <br>
+    <a href="/highprice">Price High to Low</a></button>
+</center>
+<br>
+<form action="/pricerange" method="post">
+    <th>Price Range</th>
+    <br>
+    <input type="number" name="min" placeholder="Min">
+    <input type="number" name="max" placeholder="Max">
+    <br>
     <button>Submit</button>
-</form></center>
+</form>
 <br>
 <form action="/filter" method="post">
     <th>Product Filter</th>
