@@ -25,21 +25,42 @@
         td:nth-child(2) {
             text-align: center;
         }
+        .btn {
+            margin-right: 10px;
+            width: 80px;
+
+        }
+        .my-button {
+            width: 80px;
+            height: 40px;
+            padding: 10px; /* Đảm bảo padding giống nhau cho tất cả các nút */
+            border: 2px solid black; /* Đảm bảo border giống nhau cho tất cả các nút */
+            text-align: center;
+        }
     </style>
 </head>
 <body>
 <h3>Product List  </h3>
+<nav class="navbar navbar-light" style="background-color: #e3f2fd;">
+    <div style="display: flex; justify-content: space-between; ">
+        <form action="/search" method="POST">
+            <div  style="display: flex; justify-content: space-between; ">
+            <input type="text" name="search" placeholder="search" class="form-control">
+            <button type="submit" class="btn btn-outline-primary" >Search</button>
+            </div>
+        </form>
+        <div style="width: 220px"><a href="/create"><button  style="width: 200px" type="button" class="btn btn-outline-primary">Click to add new</button></a></div>
+    </div>
+</nav>
 <br>
 
-<div style="display: flex; justify-content: space-between;">
+<!--<div style="display: flex; justify-content: space-between; ">
     <form action="/search" method="POST">
         <input type="text" name="search" placeholder="search">
         <button type="submit">Search</button>
     </form>
-
-    <div><button type="button" class="btn btn-outline-primary" >
-        <a href="/create">Click to add new</a></button></div>
-</div>
+    <div style="width: 220px"><a href="/create"><button  style="width: 200px" type="button" class="btn btn-outline-primary">Click to add new</button></a></div>
+</div>-->
 
 <table class="table">
     <thead class="thead-dark">
@@ -51,7 +72,7 @@
         <th scope="col">Description</th>
         <th scope="col">Image</th>
         <th scope="col">Category</th>
-        <th scope="col" colspan="2"><span style="margin-left: 20%">Action</span></th>
+        <th scope="col" colspan="3"><span style=" text-align: center;">Action</span></th>
 
     </tr>
     </thead>

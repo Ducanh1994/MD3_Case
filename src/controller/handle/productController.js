@@ -16,8 +16,12 @@ class ProductController {
           <td>${item.description}</td>
           <td>${item.image}</td>
           <td>${item.nameCategory}</td>
-          <td><a href="/edit/${item.id}"><button>Edit</button></a></td>
-          <td><a href="/remove/${item.id}"><button>Remove</button></a></td>`
+          <div class = "btn">
+          <td><a href="/add/${item.id}"><button type="button" class="btn btn-primary" >Add</button></a></td>
+          <td><a href="/edit/${item.id}"><button type="button" class="btn btn-warning" >Edit</button></a></td>
+         <td><a href="/remove/${item.id}"><button type="button"   class="btn btn-danger" >Delete</button></a></td>
+         </div>
+            </tr>`
         })
 
         indexHtml = indexHtml.replace('{products}', productHtml);
