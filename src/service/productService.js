@@ -40,10 +40,10 @@ class ProductService {
 
     createProduct = (product) => {
         return new Promise((resolve, reject) => {
-            this.connect.query(` INSERT INTO product (nameProduct, price, remainingProduct, description, image, idCategory)
-                                 VALUES ('${product.name}', '${product.price}', '${product.remaining_product}',
+            this.connect.query(` INSERT INTO stores.product (nameProduct, price, remainingProduct, description, image, idCategory)
+                                 VALUES ('${product.name}', ${product.price}, ${product.remaining_product},
                                          '${product.description}',
-                                         '${product.image}', '${product.id_category}')`, (err) => {
+                                         '${product.image}', ${product.id_category})`, (err) => {
                 if (err) {
                     reject(err)
                 } else {
